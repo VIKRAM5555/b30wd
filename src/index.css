@@ -11,3 +11,37 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.App{
+  display: flex;
+  flex-direction: column;
+  padding: 20%;
+  
+  
+
+
+}
+img{
+  height: 350px;
+  width:350px;
+  object-fit: cover;
+  border-radius: 50%;
+ 
+
+}
+.card{
+  background-color:rgba(9, 255, 0, 0.877);
+  color: rgb(192, 132, 43);
+margin: 10%;
+display:flex;
+flex-direction: column;
+align-items: center;
+
+font-weight: 500;
+font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+.card:hover{
+  box-shadow:inset 5px 10px 20px;
+  transition: 0.5s;
+  background-image:url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT119PKvOjfx0sI8f5AQshpmw42Nh7gTnWYrA&usqp=CAU" );
+  color: black;
+}

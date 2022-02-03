@@ -1,9 +1,11 @@
-import "./App.css";
-import React, { useState } from "react";
 
+import React, { useState } from "react";
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
 export default function App() {
-  var cine = [
+ 
+  var cinema = [
     {
       pic: "https://www.looper.com/img/gallery/why-the-professor-from-money-heist-looks-so-familiar/intro-1587390568.jpg",
       cname: "Professor",
@@ -39,9 +41,32 @@ export default function App() {
       birth: "12 December 1991 (age 29)",
       place: "Spain"
     }
-  ];
+  ]; const[cine,setCine]=useState(cinema)
+  console.log(cine)
+  const [ picdata,setPicdata]=useState("")
+  const [ cnamedata,setCnamedata]=useState("")
+  const [ rnamedata,setRnamedata]=useState("")
+  const [ birthdata,setBirthdata]=useState("")
+  const [ placedata,setPlacedata]=useState("")
+  
   return (
     <div className="App">
+     <div>
+    
+      <TextField id="outlined-basic"  variant="outlined" label="image address" onChange={(a)=> setPicdata(a.target.value)}/>
+      <TextField id="outlined-basic"  variant="outlined" label="character" onChange={(a)=>setCnamedata(a.target.value)}/>
+      <TextField id="outlined-basic"  variant="outlined" label="real" onChange={(a)=> setRnamedata(a.target.value)}/>
+      <TextField id="outlined-basic"  variant="outlined" label="birth" onChange={(a)=> setBirthdata(a.target.value)}/>
+      <TextField id="outlined-basic"  variant="outlined" label="place" onChange={(a)=> setPlacedata(a.target.value)}/>
+      <Button  variant="contained" onClick={()=>setCine([...cine,{
+      pic: picdata,
+      cname: cnamedata,
+      rname: rnamedata,
+      birth: birthdata,
+      place: placedata
+    }])}>ADD DATA</Button>
+    
+      </div>
       {cine.map((a) => 
         
           <Movies
@@ -51,12 +76,14 @@ export default function App() {
             birth={a.birth}
             place={a.place}
           />
+         
         
-      )}
+      )} 
     </div>
   );
 }
 function Movies({ pic, cname, rname, birth, place }) {
+  
   return (
     <div className="card">
       <img src={pic} alt="PROFILE PICTURE" />
