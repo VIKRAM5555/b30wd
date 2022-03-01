@@ -1,109 +1,170 @@
 
-import React, { useState } from "react";
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import "./App.css";
+import { Link, Route, Switch } from "react-router-dom";
+import { useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 
 export default function App() {
- 
-  var cinema = [
+  const [reci, setReci] = useState([
     {
-      pic: "https://www.looper.com/img/gallery/why-the-professor-from-money-heist-looks-so-familiar/intro-1587390568.jpg",
-      cname: "Professor",
-      rname: "Alvaro Morte",
-      birth: "23 February 1975 (age 46 years)",
-      place: "Algeciras"
+      id: "1000",
+      picture: `https://www.cookingclassy.com/wp-content/uploads/2018/08/tandoori-chicken-11.jpg`,
+      name: "Chicken tandoori"
     },
     {
-      pic: "https://pbs.twimg.com/media/DWbVdrFWkAA0A2k.jpg",
-      cname: "Berlin",
-      rname: "Pedro Alonso",
-      birth: "21 June 1971 (age 50)",
-      place: "Vigo, Spain"
+      id: "1001",
+      picture:
+        "https://www.vegrecipesofindia.com/wp-content/uploads/2020/01/paneer-butter-masala-1.jpg",
+      name: "Panner butter masala"
     },
     {
-      pic: "https://wallpaperaccess.com/full/6908401.jpg",
-      cname: "Tokyo",
-      rname: "Ursula Corbero",
-      birth: "11 August 1990 (age 32 years)",
-      place: " Barcelona"
+      id: "1002",
+      picture:
+        "https://images.indulgexpress.com/uploads/user/imagelibrary/2019/8/1/original/Biryanifest.jpg",
+      name: "Briyani"
     },
     {
-      pic: "https://www.brandsynario.com/wp-content/uploads/2020/05/nairobi.jpg",
-      cname: "Nairobi",
-      rname: "Alba Fores",
-      birth: "27 October 1986 (age 34 years)",
-      place: "Spain"
-    },
-    {
-      pic: "https://img.buzzfeed.com/buzzfeed-static/static/2021-01/15/6/enhanced/f1378ca0eb52/enhanced-11169-1610692248-6.png?crop=482:481;69,0&output-format=jpg&output-quality=auto",
-      cname: "Denver",
-      rname: "Jamie Lorente",
-      birth: "12 December 1991 (age 29)",
-      place: "Spain"
+      id: "1003",
+      picture:
+        "https://static.toiimg.com/thumb/64696930.cms?width=1200&height=900",
+      name: "Parotta shawarma"
     }
-  ]; const[cine,setCine]=useState(cinema)
-  console.log(cine)
-  const [ picdata,setPicdata]=useState("")
-  const [ cnamedata,setCnamedata]=useState("")
-  const [ rnamedata,setRnamedata]=useState("")
-  const [ birthdata,setBirthdata]=useState("")
-  const [ placedata,setPlacedata]=useState("")
-  
+  ]);
   return (
     <div className="App">
-     <div>
-    
-      <TextField id="outlined-basic"  variant="outlined" label="image address" onChange={(a)=> setPicdata(a.target.value)}/>
-      <TextField id="outlined-basic"  variant="outlined" label="character" onChange={(a)=>setCnamedata(a.target.value)}/>
-      <TextField id="outlined-basic"  variant="outlined" label="real" onChange={(a)=> setRnamedata(a.target.value)}/>
-      <TextField id="outlined-basic"  variant="outlined" label="birth" onChange={(a)=> setBirthdata(a.target.value)}/>
-      <TextField id="outlined-basic"  variant="outlined" label="place" onChange={(a)=> setPlacedata(a.target.value)}/>
-      <Button  variant="contained" onClick={()=>setCine([...cine,{
-      pic: picdata,
-      cname: cnamedata,
-      rname: rnamedata,
-      birth: birthdata,
-      place: placedata
-    }])}>ADD DATA</Button>
-    
+      <div>
+        <Link to="/">home</Link>
       </div>
-      {cine.map((a) => 
-        
-          <Movies
-            pic={a.pic}
-            cname={a.cname}
-            rname={a.rname}
-            birth={a.birth}
-            place={a.place}
-          />
-         
-        
-      )} 
+      <div>
+        <Link to="/kk">Receipes</Link>
+      </div>
+
+      <div>
+        <Link to="/add">Add</Link>
+      </div>
+      <Switch>
+        <Route path="/kk/:id">
+          <Nob reci={reci} setReci={setReci} />
+        </Route>
+
+        <Route path="/kk">
+          <Receipes reci={reci} setReci={setReci} />;
+        </Route>
+
+        <Route path="/add">
+          <AddData reci={reci} setReci={setReci} />
+        </Route>
+        <Route path="/">
+          <Welcome />
+        </Route>
+      </Switch>
     </div>
   );
 }
-function Movies({ pic, cname, rname, birth, place }) {
-  
+function Welcome() {
+  const mes = "WELCOME BACK😳😳😳🥵";
   return (
-    <div className="card">
-      <img src={pic} alt="PROFILE PICTURE" />
-      <h2>{cname} </h2>
-      <h2>{rname}</h2>
-      <h2>{birth} </h2>
-      <h2>{place} </h2>
-      <Support />
+    <div>
+      <h1> {mes}</h1>
     </div>
   );
 }
 
-function Support() {
-  const [like, setLike] = useState(0);
-  const [dislike, setDislike] = useState(0);
+function Receipes({ reci, setReci }) {
+  return (
+    <div>
+      {reci.map((a, i) => (
+        <Recip reci={reci} setReci={setReci} a={a} b={i} />
+      ))}
+    </div>
+  );
+}
+function Recip({ a, b, reci, setReci }) {
+  function del(b) {
+    const recicop = [...reci];
+    recicop.splice(b, 1);
+    setReci(recicop);
+  }
+  const history = useHistory();
+  return (
+    <div className="card">
+      <img src={a.picture} alt="Logo" />
+      <div>{a.name}</div>
+      <button onClick={() => history.push(`/kk/${b}`)}>
+        <h1>📝</h1>
+      </button>
+      <button onClick={() => del(b)}>
+        <h1>🚫</h1>
+      </button>
+    </div>
+  );
+}
+function AddData({ reci, setReci }) {
+  const [pic, setPic] = useState("");
+  const [name, setName] = useState("");
+  const history = useHistory();
 
   return (
     <div>
-      <button onClick={() => setLike(like + 1)}> ❤ {like} </button>
-      <button onClick={() => setDislike(dislike + 1)}> 💔 {dislike} </button>
+      <input
+        type="text"
+        onChange={(j) => setPic(j.target.value)}
+        placeholder="pic link"
+        name="name"
+      />
+      <input
+        type="text"
+        onChange={(j) => setName(j.target.value)}
+        placeholder="receipe name"
+        name="name"
+      />
+      <button
+        onClick={() => {
+          setReci([
+            ...reci,
+            {
+              picture: pic,
+              name: name
+            }
+          ]);
+          history.push("/kk");
+        }}
+      >
+        ADD
+      </button>
+    </div>
+  );
+}
+function Nob({ reci, setReci }) {
+  let { id } = useParams();
+  const [pice, setPice] = useState(reci[id].picture);
+  const [namee, setNamee] = useState(reci[id].name);
+  const history = useHistory();
+  function you(id) {
+    const recicopy = [...reci];
+    recicopy[id] = {
+      picture: pice,
+      name: namee
+    };
+    setReci(recicopy);
+    history.push("/kk");
+  }
+
+  return (
+    <div>
+      <input
+        type="text"
+        onChange={(j) => setPice(j.target.value)}
+        placeholder="pic link"
+        name="name"
+      />
+      <input
+        type="text"
+        onChange={(j) => setNamee(j.target.value)}
+        placeholder="receipe name"
+        name="name"
+      />
+      <button onClick={() => you(id)}>edit</button>
     </div>
   );
 }

@@ -1,117 +1,18 @@
-import "./styles.css";
-import React, { useState } from "react";
-
-export default function App() {
-  const [cine, setCine] = useState([
-    {
-      pic: "",
-      cname: "",
-      rname: "",
-      birth: "",
-      place: ""
-    },
-    {
-      pic: "",
-      cname: "",
-      rname: "",
-      birth: "",
-      place: ""
-    },
-    {
-      pic: "",
-      cname: "",
-      rname: "",
-      birth: "",
-      place: ""
-    },
-    {
-      pic: "",
-      cname: "",
-      rname: "",
-      birth: "",
-      place: ""
-    }
-  ]);
-
-  return (
-    <div className="App">
-      <Envelope />
-      {cine.map((a) => {
-        return (
-          <Movies
-            pic={a.pic}
-            cname={a.cname}
-            rname={a.rname}
-            birth={a.birth}
-            place={a.place}
-          />
-        );
-      })}
-    </div>
-  );
+.App {
+  font-family: sans-serif;
+  text-align: center;
 }
-function Movies({ pic, cname, rname, birth, place }) {
-  return (
-    <div className="card">
-      <img src={pic} alt="PROFILE PICTURE" />
-      <h2>{cname} </h2>
-      <h2>{rname}</h2>
-      <h2>{birth} </h2>
-      <h2>{place} </h2>
-      <Support />
-    </div>
-  );
+.card {
+  border: solid;
+  margin: 20%;
 }
+img {
+  width: 100%;
+  height: 40vh;
 
-function Support() {
-  const [like, setLike] = useState(0);
-  const [dislike, setDislike] = useState(0);
-
-  return (
-    <div>
-      <button onClick={() => setLike(like + 1)}> ❤ {like} </button>
-      <button onClick={() => setDislike(dislike + 1)}> 💔 {dislike} </button>
-    </div>
-  );
+  object-fit: cover;
 }
-function Envelope() {
-  const [picdata, setPicdata] = useState("");
-  const [cnamedata, setCnamedata] = useState("");
-  const [rnamedata, setRnamedata] = useState("");
-  const [birthdata, setBirthdata] = useState("");
-  const [placedata, setPlacedata] = useState("");
-
-  const [placedata1, setPlacedata1] = useState({
-    pic: picdata,
-    cname: cnamedata,
-    rname: rnamedata,
-    birth: birthdata,
-    place: placedata
-  });
-  console.log(placedata1);
-
-  return (
-    <div className="envelope">
-      <input placeholder="pic" onChange={(a) => setPicdata(a.target.value)} />
-      <input
-        placeholder="cname"
-        onChange={(a) => setCnamedata(a.target.value)}
-      />
-      <input
-        placeholder="rname"
-        onChange={(a) => setRnamedata(a.target.value)}
-      />
-      <input
-        placeholder="birth"
-        onChange={(a) => setBirthdata(a.target.value)}
-      />
-      <input
-        placeholder="place"
-        onChange={(a) => setPlacedata(a.target.value)}
-      />
-      <button className="add" onClick={() => setCine([...cine, placedata1])}>
-        ADD DATA
-      </button>
-    </div>
-  );
+button {
+  background-color: rgb(126, 156, 97);
+  width: 20%;
 }
